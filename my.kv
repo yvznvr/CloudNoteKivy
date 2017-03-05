@@ -1,0 +1,138 @@
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#:import factory kivy.factory
+#: import main main
+
+
+<NoteButton>:
+	size: (100,'48dp')
+
+<NoteListScreen>:
+	GridLayout:
+		cols:1
+		rows:2
+		GridLayout:
+			cols:3
+			rows:1
+        	padding: [10,10,10,10]
+			size_hint: (.1,.1)
+			Label:
+				text: root.kulad
+	        Button:
+	        	text: 'Yeni Not'
+	        	size_hint: (1,.1)
+	        	on_press: root.yeninot()
+			Button:
+				text: 'Çıkış'
+	            halign: 'right'
+	            size_hint: (1,.1)
+	            on_press: root.cikis()
+		BoxLayout:
+			orientation: 'vertical'
+        	padding: [10,50,10,50]
+        	spacing: '10px'
+
+			Label:
+				text: 'Notlarınıza Buradan ulaşabilirsiniz.'
+				size_hint: (1,.05)
+			ListView:
+	        	id: note_list_view
+	        	adapter:
+	            	ListAdapter(data=root.baslik,selection_mode='single',allow_empty_selection=True,cls=main.NoteButton)
+<NoteScreen>:
+	BoxLayout:
+		orientation: 'vertical'
+		padding: [10,10,10,10]
+		spacing: 50
+		GridLayout:
+			cols: 2
+			rows: 1
+			size_hint: (1,.1)
+			
+			Button:
+				text: 'Kaydet'
+				on_press: root.kaydet()
+			Button:
+				text: 'Sil'
+				on_press: root.sil()
+		GridLayout:
+			cols: 1
+			rows: 2
+			spacing: 10
+			TextInput:
+				id: note_title
+				multiline: False
+				size_hint: (.1,.07)
+				text_size: root.width-20, 20
+			TextInput:
+				id: note_info
+				multiline: True
+
+
+
+<LoginScreen>:
+	login: login
+	password: password
+    BoxLayout
+        id: login_layout
+        orientation: 'vertical'
+        padding: [10,10,10,10]
+        spacing: 30
+
+        Label:
+            text: 'Hoşgeldiniz'
+            size_hint: (1,.1)
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 30
+	        GridLayout:
+	        	cols:2
+	        	size_hint: (1,.07)
+	            Label:
+	                text: 'Kullanıcı Adı:'
+
+	            TextInput:
+	                id: login
+	                multiline:False
+					size_hint: (1,.3)
+
+			GridLayout:
+				cols:2
+				size_hint: (1,.07)
+	            Label:
+	                text: 'Parola:'
+
+	            TextInput:
+	                id: password
+	                multiline:False
+	                password:True
+					size_hint: (1,.2)
+
+
+	        Button:
+	            text: 'Giriş'
+				size_hint: (1,.1)
+	            on_press: root.giris()
+			BoxLayout:
+
+<Manager>:
+	screen_manager: screen_manager
+	id: screen_manager
+	login_screen: login_screen
+	notelist_screen: notelist_screen
+	note_screen: note_screen
+
+	LoginScreen:
+		id: login_screen
+		name: 'login'
+		manager: screen_manager
+	NoteListScreen:
+		id: notelist_screen
+		name: 'list'
+		manager: screen_manager
+	NoteScreen:
+		id: note_screen
+		name: 'nots'
+		manager: screen_manager
+
